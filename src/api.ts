@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Link } from './types';
 
-const API_URL = 'https://link-vault-xs1r.vercel.app/api/links';
+const API_URL = 'https://link-vault-splf.vercel.app/api/links';
 
 
 
