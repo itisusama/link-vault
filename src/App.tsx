@@ -31,8 +31,8 @@ function App() {
 
   const handleAddLink = async (newLinkData: { name: string; url: string; description?: string }) => {
     try {
-      const addedLink = await api.addLink(newLinkData);
-      setLinks((prev) => [addedLink, ...prev]);
+      await api.addLink(newLinkData);
+      await fetchLinks();
     } catch (err) {
       console.error('Error adding link:', err);
     }

@@ -29,18 +29,10 @@ export const api = {
   addLink: async (link: Omit<Link, '_id' | 'id' | 'createdAt'>): Promise<Link> => {
     try {
       const response = await axios.post(API_URL, link);
-      // Clean up local storage if backend comes online
       return response.data;
     } catch (error) {
-      const newLink: Link = {
-        ...link,
-        id: Date.now().toString(),
-        createdAt: new Date().toISOString()
-      };
-      const links = getLocalLinks();
-      const updatedLinks = [newLink, ...links];
-      saveLocalLinks(updatedLinks);
-      return newLink;
+      console.error('Failed to save link to database:', error);
+      throw error;
     }
   },
 

@@ -11,20 +11,21 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Cache connection across warm serverless invocations
-let isConnected = false;
-
+// Use global cache so the connection survives across serverless warm restarts
 const connectDB = async () => {
-  if (isConnected && mongoose.connection.readyState === 1) return;
+  if (global._mongooseConnected && mongoose.connection.readyState === 1) return;
 
-  const mongoURI = process.env.MONGO_URI || 'mongodb://localhost:27017/linksaver';
+  const mongoURI = process.env.MONGO_URI;
+  if (!mongoURI) {
+    throw new Error('MONGO_URI environment variable is not set');
+  }
 
   await mongoose.connect(mongoURI, {
     bufferCommands: false,
-    serverSelectionTimeoutMS: 5000,
+    serverSelectionTimeoutMS: 10000,
   });
 
-  isConnected = true;
+  global._mongooseConnected = true;
 };
 
 // Ensure DB is connected before any route runs
@@ -33,16 +34,19 @@ app.use(async (req, res, next) => {
     await connectDB();
     next();
   } catch (err) {
-    console.error('MongoDB connection error:', err);
-    res.status(500).json({ message: 'Database connection failed' });
+    console.error('MongoDB connection error:', err.message);
+    res.status(500).json({ message: 'Database connection failed', error: err.message });
   }
 });
 
 app.use('/api/links', linkRoutes);
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+// Only listen when running locally, not on Vercel serverless
+if (process.env.NODE_ENV !== 'production') {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
+}
 
 module.exports = app;
