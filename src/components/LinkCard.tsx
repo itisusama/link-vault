@@ -9,7 +9,7 @@ interface LinkCardProps {
 
 export const LinkCard: React.FC<LinkCardProps> = ({ link, onDelete }) => {
   const displayId = link._id || link.id;
-
+//  This will still have issues
   return (
     <div className="glass-card group relative rounded-2xl p-6 transition-all duration-300 hover:bg-white/6 hover:-translate-y-1">
       <div className="flex justify-between items-start gap-4">
