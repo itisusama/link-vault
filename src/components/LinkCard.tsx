@@ -11,7 +11,7 @@ export const LinkCard: React.FC<LinkCardProps> = ({ link, onDelete }) => {
   const displayId = link._id || link.id;
 
   return (
-    <div className="glass-card group relative rounded-2xl p-6 transition-all duration-300 hover:bg-white/[0.06] hover:-translate-y-1">
+    <div className="glass-card group relative rounded-2xl p-6 transition-all duration-300 hover:bg-white/6 hover:-translate-y-1">
       <div className="flex justify-between items-start gap-4">
         <div className="flex items-center gap-4 flex-1 min-w-0">
           <div className="p-3 bg-indigo-500/10 rounded-xl text-indigo-400 group-hover:scale-110 group-hover:bg-indigo-500/20 transition-all">

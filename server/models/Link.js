@@ -21,4 +21,6 @@ const LinkSchema = new mongoose.Schema({
   }
 });
 
+LinkSchema.set('bufferCommands', false);
+
 module.exports = mongoose.model('Link', LinkSchema);
