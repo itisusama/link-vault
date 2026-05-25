@@ -3,7 +3,7 @@ import { api } from './api';
 import { Link } from './types';
 import { LinkCard } from './components/LinkCard';
 import { LinkForm } from './components/LinkForm';
-import { Link2, Loader2, Info, Sparkles } from 'lucide-react';
+import { Link2, Loader2, Info, AlertCircle, RefreshCw } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 function App() {
@@ -18,11 +18,11 @@ function App() {
   const fetchLinks = async () => {
     try {
       setIsLoading(true);
+      setError(null);
       const data = await api.getLinks();
       setLinks(data);
-      setError(null);
     } catch (err) {
-      setError('Backend not detected. Using local storage mode.');
+      setError('Could not reach the server. MongoDB may be waking up — click Retry in a few seconds.');
       console.error(err);
     } finally {
       setIsLoading(false);
@@ -34,7 +34,8 @@ function App() {
       await api.addLink(newLinkData);
       await fetchLinks();
     } catch (err) {
-      console.error('Error adding link:', err);
+      setError('Failed to save link. The server may be unavailable — try again shortly.');
+      console.error(err);
     }
   };
 
@@ -70,16 +71,23 @@ function App() {
 
         <AnimatePresence>
           {error && (
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-              className="mb-8 p-4 glass-card rounded-2xl flex items-center gap-3 text-indigo-300 border-indigo-500/20"
+              className="mb-8 p-4 glass-card rounded-2xl flex items-center gap-3 text-red-300 border border-red-500/20"
             >
-              <div className="p-2 bg-indigo-500/10 rounded-lg">
-                <Sparkles size={18} />
+              <div className="p-2 bg-red-500/10 rounded-lg">
+                <AlertCircle size={18} />
               </div>
-              <p className="text-sm font-medium">{error}</p>
+              <p className="text-sm font-medium flex-1">{error}</p>
+              <button
+                onClick={fetchLinks}
+                className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/20 transition-colors"
+              >
+                <RefreshCw size={13} />
+                Retry
+              </button>
             </motion.div>
           )}
         </AnimatePresence>
