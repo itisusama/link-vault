@@ -29,9 +29,9 @@ function App() {
     }
   };
 
-  const handleAddLink = async (newLinkData: { name: string; url: string; description?: string }) => {
+  const handleAddLink = async (newLinkData: { linkName: string; destinationUrl: string; description?: string }) => {
     try {
-      await api.addLink(newLinkData);
+      await api.addLink(newLinkData);   
       await fetchLinks();
     } catch (err) {
       setError('Failed to save link. The server may be unavailable — try again shortly.');
@@ -57,7 +57,7 @@ function App() {
           className="text-center mb-16"
         >
           <div className="flex justify-center items-center gap-4 mb-6">
-            <div className="p-4 bg-gradient-to-br from-indigo-500 to-violet-600 rounded-2xl text-white shadow-2xl shadow-indigo-500/20 float-animation">
+            <div className="p-4 bg-linear-to-br from-indigo-500 to-violet-600 rounded-2xl text-white shadow-2xl shadow-indigo-500/20 float-animation">
               <Link2 size={40} strokeWidth={2.5} />
             </div>
             <div className="text-left">
@@ -109,7 +109,7 @@ function App() {
               </span>
             </div>
             {links.length > 0 && (
-               <div className="h-px flex-grow mx-8 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+               <div className="h-px grow mx-8 bg-linear-to-r from-transparent via-white/10 to-transparent" />
             )}
           </div>
 

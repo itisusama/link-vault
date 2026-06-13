@@ -19,16 +19,16 @@ export const LinkCard: React.FC<LinkCardProps> = ({ link, onDelete }) => {
           </div>
           <div className="flex-1 min-w-0">
             <h3 className="font-bold text-white text-lg truncate group-hover:text-indigo-300 transition-colors">
-              {link.name}
+              {link.linkName}
             </h3>
             <div className="flex items-center gap-2 text-slate-500 text-sm mt-0.5">
                <a
-                href={link.url.startsWith('http') ? link.url : `https://${link.url}`}
+                href={link.destinationUrl.startsWith('http') ? link.destinationUrl : `https://${link.destinationUrl}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-indigo-400 flex items-center gap-1.5 transition-colors group/link"
               >
-                <span className="truncate max-w-[180px] sm:max-w-[300px]">{link.url}</span>
+                <span className="truncate max-w-[180px] sm:max-w-[300px]">{link.destinationUrl}</span>
                 <ExternalLink size={12} className="opacity-0 group-hover/link:opacity-100 transition-opacity" />
               </a>
             </div>

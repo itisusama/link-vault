@@ -2,27 +2,27 @@ import React, { useState } from 'react';
 import { PlusCircle } from 'lucide-react';
 
 interface LinkFormProps {
-  onAdd: (link: { name: string; url: string; description?: string }) => void;
+  onAdd: (link: { linkName: string; destinationUrl: string; description?: string }) => void;
 }
 
 export const LinkForm: React.FC<LinkFormProps> = ({ onAdd }) => {
-  const [name, setName] = useState('');
-  const [url, setUrl] = useState('');
+  const [linkName, setLinkName] = useState('');
+  const [destinationUrl, setDestinationUrl] = useState('');
   const [description, setDescription] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name || !url) return;
+    if (!linkName || !destinationUrl) return;
     
-    onAdd({ name, url, description });
-    setName('');
-    setUrl('');
+    onAdd({ linkName, destinationUrl, description });
+    setLinkName('');
+    setDestinationUrl('');
     setDescription('');
   };
 
   return (
     <form onSubmit={handleSubmit} className="glass-card rounded-2xl p-8 mb-12 relative overflow-hidden group">
-      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 opacity-50 group-hover:opacity-100 transition-opacity" />
+      <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500 opacity-50 group-hover:opacity-100 transition-opacity" />
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         <div className="space-y-2">
@@ -33,22 +33,22 @@ export const LinkForm: React.FC<LinkFormProps> = ({ onAdd }) => {
             id="name"
             type="text"
             required
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={linkName}
+            onChange={(e) => setLinkName(e.target.value)}
             className="glass-input w-full px-5 py-3 rounded-xl focus:bg-white/10 focus:border-indigo-500/50 focus:ring-2 focus:ring-indigo-500/20"
             placeholder="e.g. Design Inspiration"
           />
         </div>
         <div className="space-y-2">
-          <label htmlFor="url" className="block text-xs font-bold uppercase tracking-wider text-slate-400 ml-1">
+          <label htmlFor="destinationUrl" className="block text-xs font-bold uppercase tracking-wider text-slate-400 ml-1">
             Destination URL
           </label>
           <input
-            id="url"
+            id="destinationUrl"
             type="text"
             required
-            value={url}
-            onChange={(e) => setUrl(e.target.value)}
+            value={destinationUrl}
+            onChange={(e) => setDestinationUrl(e.target.value)}
             className="glass-input w-full px-5 py-3 rounded-xl focus:bg-white/10 focus:border-indigo-500/50 focus:ring-2 focus:ring-indigo-500/20"
             placeholder="e.g. dribbble.com"
           />
@@ -69,7 +69,7 @@ export const LinkForm: React.FC<LinkFormProps> = ({ onAdd }) => {
       </div>
       <button
         type="submit"
-        className="w-full bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold py-4 px-6 rounded-xl flex items-center justify-center gap-3 transition-all transform active:scale-[0.98] shadow-lg shadow-indigo-600/20 hover:shadow-indigo-600/40"
+        className="w-full bg-linear-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold py-4 px-6 rounded-xl flex items-center justify-center gap-3 transition-all transform active:scale-[0.98] shadow-lg shadow-indigo-600/20 hover:shadow-indigo-600/40"
       >
         <PlusCircle size={22} />
         Secure Link to Vault
