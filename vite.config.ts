@@ -16,4 +16,12 @@ export default defineConfig({
       "@": path.resolve(__dirname, "src"),
     },
   },
+  server: {
+    proxy: {
+      "/api": {
+        target: "https://vault-links-eight.vercel.app",
+        changeOrigin: true,
+      },
+    },
+  },
 });
